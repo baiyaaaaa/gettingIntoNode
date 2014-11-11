@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Socket.IO chat</title>
+	<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+	<script type="text/javascript" src="chat.js"></script>
+	<style type="text/css">
+		.message span {color: #ccc;font-size: 12px;margin-left: 5px;}
+		#results a {display: none;}
+		#dj {display: none;}
+		#dj.isDJ {display: block;}
+	</style>
+</head>
+<body>
+	<div id="chat">
+		<ul id="message"></ul>
+		<form action="" id="form">
+			<input type="text" id="input">
+			<input type="submit" value="Send">
+		</form>
+	</div>
+	<div id="playing"></div>
+	<form id="dj">
+		<h3>Search Songs</h3>
+		<input type="text" id="s">
+		<ul id="results"></ul>
+		<button type="submit">Search</button>
+	</form>
+</body>
+</html>

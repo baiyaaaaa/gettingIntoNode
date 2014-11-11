@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+		var lastMessage = '';
+
+		window.onload = function() {
+			var ws,
+			ip = 'localhost',
+			port = 3000;
+
+			try {
+				ws = new WebSocket("ws://" + ip + ":" + port);
+			} catch(ex) {
+				console.log('Faild to connect WebSocket to' + ip + ":" + port);
+			}
+
+			ws.onopen = function() {
+				console.log('connect WebSocket');
+				document.onmousemove = function(ev) {
+					var pos = {};
+
+					pos.x = ev.clientX;
+					pos.y = ev.clientY;
+
+					ws.send(JSON.stringify(pos));
+				}
+			};
+
+			ws.onmessage = function(ev) {
+				var data = JSON.parse(ev.data);
+
+				if ("position" == data.type) {
+					var pos = data.pos,
+						li = document.createElement('li');
+
+					li.innerHTML = "x : " + pos.x + "\ty : " + pos.y;
+					li.id = "socket-" + data.id;
+					document.getElementById('latency').appendChild(li);
+				} else {
+					var li = document.getElementById("socket-" + data.id);
+					document.getElementById('latency').removeChild(li);
+				}
+			};
+
+			window.onunload = function() {
+				ws.close();
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="latency"></ul>
+</body>
+</html>

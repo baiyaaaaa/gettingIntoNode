@@ -1,0 +1,13 @@
+extends layout
+
+block body
+  h2 Project
+  #list
+    ul#project-lists
+    each project in projects
+      li
+        a(href="/project/#{project.id}/tasks")= project.title
+        a.delete(href="/project/#{project.id}") x
+    form#add(action="/projects" method="post")
+      input(type="text", name="title")
+      button(type="submit") 创建项目
